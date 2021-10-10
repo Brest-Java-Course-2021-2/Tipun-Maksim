@@ -5,5 +5,6 @@ public class Main {
         System.out.println("token");
         System.out.println("terminal");
         System.out.println("commit2");
+        System.out.println("terminal2");
     }
 }
