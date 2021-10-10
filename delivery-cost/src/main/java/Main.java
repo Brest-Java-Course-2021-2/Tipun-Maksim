@@ -3,5 +3,6 @@ public class Main {
         System.out.println("Hello");
         System.out.println("commit");
         System.out.println("token");
+        System.out.println("terminal");
     }
 }
