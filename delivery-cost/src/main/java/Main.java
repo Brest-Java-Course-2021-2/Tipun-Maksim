@@ -1,5 +1,7 @@
 import calc.CalcImpl;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.Scanner;
 
@@ -9,24 +11,35 @@ public class Main {
         //prop / json/ csv
 
         BigDecimal weight, pricePerKg, length, pricePerKm;
+        String close;
+        File file = new File("inputdata.txt");
+        try (Scanner scanner = new Scanner(file)) {
+            String line = scanner.nextLine();
+            String[]numbers = line.split(" ");
 
-        try(Scanner scanner = new Scanner(System.in)) {
+            if(numbers.length % 4 != 0){
+                throw new IllegalArgumentException();}
+                int quantytyNumbers = numbers.length;
+                int i = 0;
             do {
-                weight = getValueFromCom(scanner, "Enter weight:");
-                pricePerKg = getValueFromCom(scanner, "Enter pricePerKg:");
-                length = getValueFromCom(scanner, "Enter km:");
-                pricePerKm = getValueFromCom(scanner, "Enter pricePerKm:");
-
+                weight = getValueFromCom(numbers[i], "Weight:");
+                pricePerKg = getValueFromCom(numbers[i+1], "PricePerKg:");
+                length = getValueFromCom(numbers[i+2], "km:");
+                pricePerKm = getValueFromCom(numbers[i+3], "PricePerKm:");
 
                 System.out.println("Result: " + new CalcImpl().handle(weight,pricePerKg,length,pricePerKm));
-                System.out.println("Enter 'q' to exit and 'c' to continue");
-            }while (!scanner.hasNext("q"));
+                quantytyNumbers -= 4;
+                i += 4;
+            }while (quantytyNumbers != 0);
+        }catch (FileNotFoundException e){
+            System.out.println("Файл не найден");
+        }catch (IllegalArgumentException e){
+            System.out.println("Некорректный входной файл");
         }
     }
-    private static BigDecimal getValueFromCom(Scanner scanner, String outputMesage) {
-        BigDecimal enteredValue;
-        System.out.print(outputMesage);
-        enteredValue = scanner.nextBigDecimal();
+    private static BigDecimal getValueFromCom(String number, String outputMesage) {
+        BigDecimal enteredValue = new BigDecimal(number);
+        System.out.println(outputMesage + " = " + enteredValue);
         return enteredValue;
     }
 }
