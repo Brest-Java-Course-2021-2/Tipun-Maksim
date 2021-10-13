@@ -2,6 +2,7 @@ import calc.CalcImpl;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.Scanner;
 
@@ -10,10 +11,10 @@ public class Main {
         //result = m*pricePerKg + km*pricePerKm;
         //prop / json/ csv
 
-        BigDecimal weight, pricePerKg, length, pricePerKm;
-        String close;
+        BigDecimal weight, pricePerKg, length, pricePerKm, result;
         File file = new File("inputdata.txt");
-        try (Scanner scanner = new Scanner(file)) {
+        File fileOut = new File("result.txt");
+        try (Scanner scanner = new Scanner(file); PrintWriter pw = new PrintWriter(fileOut)) {
             String line = scanner.nextLine();
             String[]numbers = line.split(" ");
 
@@ -26,8 +27,9 @@ public class Main {
                 pricePerKg = getValueFromCom(numbers[i+1], "PricePerKg:");
                 length = getValueFromCom(numbers[i+2], "km:");
                 pricePerKm = getValueFromCom(numbers[i+3], "PricePerKm:");
-
-                System.out.println("Result: " + new CalcImpl().handle(weight,pricePerKg,length,pricePerKm));
+                result = new CalcImpl().handle(weight,pricePerKg,length,pricePerKm);
+                System.out.println("Result: " + result);
+                pw.println(result);
                 quantytyNumbers -= 4;
                 i += 4;
             }while (quantytyNumbers != 0);
