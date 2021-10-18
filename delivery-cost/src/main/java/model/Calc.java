@@ -3,6 +3,8 @@ package model;
 import java.math.BigDecimal;
 import java.util.Scanner;
 
+import static model.StatusType.CALC;
+
 public class Calc implements Status{
 
   Scanner scanner;
@@ -23,6 +25,6 @@ public class Calc implements Status{
 
     @Override
     public StatusType getType() {
-        return null;
+        return CALC;
     }
 }
